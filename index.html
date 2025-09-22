@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MA-Ontology | Multi-Agent Path Finding</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            --color-primary: #ad4c5e;
+            --color-primary-dark: #8e3e4d;
+            --color-bg: #F9FAFB;
+            --color-sidebar-bg: #1F2937;
+            --color-text-main: #374151;
+            --color-text-light: #d1d5db;
+            --code-bg: #282c34;
+        }
+        .bg-primary { background-color: var(--color-primary); }
+        .hover\:bg-primary-dark:hover { background-color: var(--color-primary-dark); }
+        .text-primary { color: var(--color-primary); }
+        .bg-sidebar { background-color: var(--color-sidebar-bg); }
+        .text-light { color: var(--color-text-light); }
+        .sidebar-link.active {
+            background-color: var(--color-primary);
+            color: white;
+        }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        .prose h2 {
+            font-size: 1.875rem;
+            font-weight: 600;
+            color: var(--color-text-main);
+            border-bottom: 2px solid var(--color-primary);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            margin-top: 2rem;
+        }
+        .prose h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-text-main);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+         .prose h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-text-main);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .prose p, .prose li {
+            color: #4B5563;
+            line-height: 1.75;
+            text-align: justify;
+        }
+        .prose ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+        .prose code {
+            background-color: #F3F4F6;
+            color: var(--color-primary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Fira Code', monospace;
+        }
+        .prose pre {
+            background-color: var(--code-bg);
+            color: #abb2bf;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9em;
+        }
+        .prose pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border-radius: 0;
+        }
+        .sparql-keyword { color: #c678dd; }
+        .sparql-variable { color: #e5c07b; }
+        .sparql-string { color: #98c379; }
+        .sparql-punc { color: #abb2bf; }
+        .sparql-prefix { color: #d19a66; }
+        .sparql-function { color: #61afef; }
+        .prose table {
+            width: 100%;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-collapse: collapse;
+        }
+        .prose th, .prose td {
+            border: 1px solid #E5E7EB;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .prose th {
+            background-color: #F9FAFB;
+            font-weight: 600;
+        }
+        .prose td code {
+            font-size: 0.9rem;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <div class="relative min-h-screen md:flex">
+        <!-- Mobile menu button -->
+        <div class="bg-gray-800 text-gray-100 flex justify-end md:hidden">
+            <button id="mobile-menu-button" class="p-4 focus:outline-none focus:bg-gray-700">
+                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="bg-sidebar w-64 text-white flex-shrink-0 -translate-x-full absolute inset-y-0 left-0 transform md:relative md:translate-x-0 transition duration-200 ease-in-out z-20">
+            <div class="p-6 sticky top-0">
+                <h1 class="text-3xl font-bold text-white mb-2">MA-Ontology</h1>
+                <p class="text-sm text-light mb-8">Multi-Agent Path Finding</p>
+                <nav id="sidebar-nav">
+                    <ul>
+                        <li><a href="#about" class="sidebar-link active block py-3 px-4 rounded-lg transition duration-200 hover:bg-gray-700">About maPO</a></li>
+                        <li><a href="#maPO-schema" class="sidebar-link block py-3 px-4 rounded-lg transition duration-200 hover:bg-gray-700">maPO Schema</a></li>
+                        <li><a href="#usecases" class="sidebar-link block py-3 px-4 rounded-lg transition duration-200 hover:bg-gray-700">Use Cases</a></li>
+                        <li><a href="#demo" class="sidebar-link block py-3 px-4 rounded-lg transition duration-200 hover:bg-gray-700">Demo</a></li>
+                        <li><a href="https://github.com/BharathMuppasani/MA-Ontology" target="_blank" class="flex items-center gap-3 py-3 px-4 rounded-lg transition duration-200 hover:bg-gray-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+                            GitHub Project</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 sm:p-8 md:p-12 overflow-y-auto">
+            <div class="max-w-4xl mx-auto prose lg:prose-xl">
+
+                <!-- About Section -->
+                <section id="about" class="content-section active">
+                    <h2>About the Multi-Agent Planning Ontology (maPO)</h2>
+                    <p>As multi-agent systems become more autonomous, particularly in complex coordination tasks like Multi-Agent Path Finding (MAPF), the need for transparent and interpretable decision-making becomes critical. While execution traces from MAPF algorithms provide rich insight, existing methods for explainability remain fragmented.</p>
+                    <p>We introduce the <strong>Multi-Agent Planning Ontology (maPO)</strong>, a unified semantic schema designed to transform raw MAPF traces into a single, queryable knowledge graph. This ontology formalizes key concepts like segmentation snapshots, conflict alerts, and replanning strategies, making the planner's behavior transparent and auditable.</p>
+                    <h3>The Problem</h3>
+                    <p>Coordinating multiple autonomous agents to reach individual goals without collisions is a foundational challenge in robotics and AI. Modern planners, search-based or learning-based approaches, achieve high performance but often act as "black boxes," offering little transparency into their decision-making processes. This lack of interpretability is a major barrier to deploying these systems in safety-critical applications.</p>
+                    <h3>Our Solution</h3>
+                    <p>The <strong>maPO</strong> framework provides a structured, planner-agnostic way to represent and query MAPF execution data. By ingesting planner outputs and transforming them into ontology instances, we can use SPARQL queries to generate on-demand, human-readable explanations for complex behaviors. This approach allows us to answer "why" questions about an agent's path, delays, and plan changes without modifying the underlying planning algorithms.</p>
+                     <h3>Key Contributions</h3>
+                    <ul>
+                        <li><strong>The MA-Ontology (maPO) Schema:</strong> A formal ontology that captures MAPF-specific constructs, including agent properties, collision events, and replanning strategies.</li>
+                        <li><strong>Log-to-Graph Pipeline:</strong> A transformation process that turns standard planner logs into a rich knowledge graph.</li>
+                        <li><strong>SPARQL-based Explanation Generation:</strong> A framework for generating logical and contrastive explanations through standardized queries.</li>
+                    </ul>
+                </section>
+
+                <!-- Ontology Section -->
+                <section id="maPO-schema" class="content-section">
+                    <h2>The maPO Schema</h2>
+                     <h3>Ontology Diagram</h3>
+                    <div class="bg-white rounded-lg p-4 my-8 text-center shadow-md">
+                        <img src="ontology/maPO.png" alt="MA-Ontology Schema Diagram" class="mx-auto rounded-md">
+                        <p class="text-sm text-gray-500 mt-2">The maPO schema, illustrating the classes and properties for modeling the MAPF planning and conflict-resolution workflow.</p>
+                    </div>
+                    <p>The maPO extends the foundational concepts of the standard Planning Ontology to address the unique complexities of multi-agent scenarios. It creates a formal, queryable knowledge base that supports on-demand explainability. To ensure interoperability, maPO reuses concepts from established W3C and IEEE standards.</p>
+                    
+                    <h3>Core Components</h3>
+                    <ul>
+                        <li><strong>Agent and State Representation:</strong> Models each agent's identity, capabilities, and location at specific points in time. The <code>ma:Agent</code> class is defined as a subclass of both <code>plan:ProblemObject</code> and <code>sosa:Platform</code> to ground it as an entity capable of perception and action.</li>
+                        <li><strong>Multi-Agent Plan Representation:</strong> Defines the hierarchy of a global <code>ma:JointPlan</code> composed of individual <code>ma:AgentSubPlan</code> instances. It distinguishes between the initial <code>ma:OriginalSubPlan</code> and any subsequent <code>ma:ResolvedSubPlan</code> generated after conflict resolution.</li>
+                        <li><strong>Conflict and Resolution Modeling:</strong> Captures the entire lifecycle of a conflict, from a <code>ma:CollisionEvent</code> to a <code>ma:ConflictAlert</code> and the resulting <code>ma:ReplanningStrategy</code>. It uses the PROV Ontology (PROV-O) to create a traceable, auditable record of how and why a plan was revised, using properties like <code>prov:wasDerivedFrom</code> to link plan versions.</li>
+                    </ul>
+
+                    <h3>Ontologies Reused</h3>
+                    <p>To ground our ontology in established semantic standards and enhance interoperability, maPO reuses concepts from several widely adopted resources:</p>
+                    <ul>
+                        <li><strong>SOSA/SSN:</strong> To model agents as platforms capable of sensing and acting.</li>
+                        <li><strong>Provenance Ontology (PROV-O):</strong> To formally link original and revised plans, creating a traceable history of the planner's conflict resolution decisions.</li>
+                        <li><strong>OWL-Time:</strong> To represent time instants and intervals for events, states, and path segments.</li>
+                        <li><strong>CORA:</strong> To define agent capabilities in a structured manner.</li>
+                        <li><strong>RDF Schema:</strong> To structure agent path sequences and other foundational data types.</li>
+                    </ul>
+                    <h3>Ontology Prefixes</h3>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Prefix</th>
+                                    <th>IRI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>ma</code></td>
+                                    <td><code>http://example.org/ma#</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>plan</code></td>
+                                    <td><code>https://ai4society.github.io/planning-ontology#</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>owl</code></td>
+                                    <td><code>http://www.w3.org/2002/07/owl#</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>prov</code></td>
+                                    <td><code>http://www.w3.org/ns/prov#</code></td>
+                                </tr>
+                                 <tr>
+                                    <td><code>rdf</code></td>
+                                    <td><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>rdfs</code></td>
+                                    <td><code>http://www.w3.org/2000/01/rdf-schema#</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>sosa</code></td>
+                                    <td><code>http://www.w3.org/ns/sosa/</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>time</code></td>
+                                    <td><code>http://www.w3.org/2006/time#</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>xsd</code></td>
+                                    <td><code>http://www.w3.org/2001/XMLSchema#</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Use Cases / Competency Questions Section -->
+                <section id="usecases" class="content-section">
+                    <h2>Use Cases & Competency Questions</h2>
+                    <p>To ensure our ontology effectively supports explainability, its design was guided by a set of competency questions (CQs). These questions represent concrete explanatory needs an end-user would have when analyzing a multi-agent plan. </p>
+                    
+                    <ul class="my-6">
+                        <li><strong>C1:</strong> Which <code>CollisionEvents</code> (including their time, type, location, and involved agents) were detected during planning?</li>
+                        <li><strong>C2:</strong> For a given <code>CollisionEvent</code>, which agent(s) received a <code>ConflictAlert</code>?</li>
+                        <li><strong>C3:</strong> What was an agent's original, conflict-unaware plan, and how does it compare to its final, resolved plan?</li>
+                        <li><strong>C4:</strong> Why did a specific agent have to wait or reroute in its final plan?</li>
+                        <li><strong>C5:</strong> For a given <code>ConflictAlert</code>, which <code>ReplanningStrategy</code> did the agent use?</li>
+                        <li><strong>C6:</strong> What was the cost change associated with a revised <code>AgentSubPlan</code>?</li>
+                        <li><strong>C7:</strong> Why was a particular agent (from a set of conflicting agents) chosen to be the one to replan? (i.e., what was the planner's <code>selectionRationale</code>?)</li>
+                        <li><strong>C8:</strong> What is the final <code>JointPlan</code> after all conflicts are resolved, and what is its overall makespan?</li>
+                    </ul>
+
+                    <p>Below are key examples of how these questions are answered, along with the SPARQL queries and Natural Language templates used to generate the explanations.</p>
+
+                    <div class="space-y-6 mt-8">
+                        
+                        <div class="cq-item border border-gray-200 rounded-lg p-4 bg-white">
+                            <h3 class="!mt-0">C1 & C2: List an Agent's Conflicts</h3>
+                            <p><strong>Purpose:</strong> In a MAPF setting, this question is fundamental for debugging and analysis. It helps diagnose why a plan might be inefficient or complex by pinpointing every moment of contention (a vertex or edge conflict) that the planner had to resolve for a specific agent. It identifies the "what, where, when, and who" of every conflict.</p>
+                            <h4>SPARQL Query</h4>
+                            <pre><code><span class="sparql-keyword">SELECT</span> <span class="sparql-variable">?conflict</span> <span class="sparql-variable">?timestamp</span> <span class="sparql-variable">?type</span> 
+  <span class="sparql-punc">(</span><span class="sparql-function">GROUP_CONCAT</span><span class="sparql-punc">(</span><span class="sparql-keyword">DISTINCT</span> <span class="sparql-variable">?otherAgentName</span><span class="sparql-punc">;</span> <span class="sparql-variable">separator</span><span class="sparql-punc">=</span><span class="sparql-string">", "</span><span class="sparql-punc">)</span> <span class="sparql-keyword">as</span> <span class="sparql-variable">?involvedAgents</span><span class="sparql-punc">)</span> 
+  <span class="sparql-punc">(</span><span class="sparql-function">GROUP_CONCAT</span><span class="sparql-punc">(</span><span class="sparql-function">CONCAT</span><span class="sparql-punc">(</span><span class="sparql-string">"("</span><span class="sparql-punc">,</span> <span class="sparql-function">STR</span><span class="sparql-punc">(</span><span class="sparql-variable">?y</span><span class="sparql-punc">),</span> <span class="sparql-string">","</span><span class="sparql-punc">,</span> <span class="sparql-function">STR</span><span class="sparql-punc">(</span><span class="sparql-variable">?x</span><span class="sparql-punc">),</span> <span class="sparql-string">")"</span><span class="sparql-punc">);</span> <span class="sparql-variable">separator</span><span class="sparql-punc">=</span><span class="sparql-string">";"</span><span class="sparql-punc">)</span> <span class="sparql-keyword">as</span> <span class="sparql-variable">?locations</span><span class="sparql-punc">)</span> 
+<span class="sparql-keyword">WHERE</span> <span class="sparql-punc">{</span> 
+  <span class="sparql-variable">?conflict</span> <span class="sparql-prefix">a</span> <span class="sparql-prefix">ma:CollisionEvent</span> <span class="sparql-punc">;</span> 
+            <span class="sparql-prefix">ma:involvesAgentsEvent</span> <span class="sparql-prefix">ma:agent-1</span><span class="sparql-punc">,</span> <span class="sparql-variable">?otherAgent</span> <span class="sparql-punc">;</span> 
+            <span class="sparql-prefix">ma:occursAtTime</span><span class="sparql-punc">/</span><span class="sparql-prefix">time:inXSDDateTimeStamp</span> <span class="sparql-variable">?timestamp</span> <span class="sparql-punc">;</span> 
+            <span class="sparql-prefix">ma:conflictTypeEvent</span> <span class="sparql-variable">?type</span> <span class="sparql-punc">;</span> 
+            <span class="sparql-prefix">ma:conflictLocation</span> <span class="sparql-variable">?locNode</span> <span class="sparql-punc">.</span> 
+  <span class="sparql-variable">?locNode</span> <span class="sparql-prefix">ma:xCoordinate</span> <span class="sparql-variable">?x</span> <span class="sparql-punc">;</span> <span class="sparql-prefix">ma:yCoordinate</span> <span class="sparql-variable">?y</span> <span class="sparql-punc">.</span> 
+  <span class="sparql-keyword">FILTER</span><span class="sparql-punc">(</span><span class="sparql-variable">?otherAgent</span> <span class="sparql-punc">!=</span> <span class="sparql-prefix">ma:agent-1</span><span class="sparql-punc">)</span> 
+  <span class="sparql-keyword">BIND</span><span class="sparql-punc">(</span><span class="sparql-function">STRAFTER</span><span class="sparql-punc">(</span><span class="sparql-function">STR</span><span class="sparql-punc">(</span><span class="sparql-variable">?otherAgent</span><span class="sparql-punc">),</span> <span class="sparql-string">"#"</span><span class="sparql-punc">)</span> <span class="sparql-keyword">AS</span> <span class="sparql-variable">?otherAgentName</span><span class="sparql-punc">)</span> 
+<span class="sparql-punc">}</span> <span class="sparql-keyword">GROUP BY</span> <span class="sparql-variable">?conflict</span> <span class="sparql-variable">?timestamp</span> <span class="sparql-variable">?type</span> <span class="sparql-keyword">ORDER BY</span> <span class="sparql-variable">?timestamp</span></code></pre>
+                            <h4>Natural Language Template</h4>
+                            <pre><code>[Agent Name] was involved in these conflicts (highlighted on grid):
+Time: [timestamp]
+Type: [type]
+Location: [locations]
+With: [involvedAgents]</code></pre>
+                        </div>
+
+                        <div class="cq-item border border-gray-200 rounded-lg p-4 bg-white">
+                            <h3 class="!mt-0">C4: Explain Why an Agent Waited</h3>
+                            <p><strong>Purpose:</strong> This is crucial for understanding plan sub-optimality. Waiting is a primary strategy to avoid collisions, but it directly impacts an agent's travel time and the overall plan efficiency (makespan). This query provides a direct causal link, explaining that a wait was not arbitrary but a necessary action to prevent a specific, identified conflict with another agent.</p>
+                            <h4>SPARQL Query</h4>
+                            <pre><code><span class="sparql-keyword">SELECT</span> <span class="sparql-variable">?startTS</span> <span class="sparql-variable">?endTS</span> <span class="sparql-variable">?otherAgentName</span> <span class="sparql-variable">?conflictTS</span> <span class="sparql-variable">?x</span> <span class="sparql-variable">?y</span> 
+<span class="sparql-keyword">WHERE</span> <span class="sparql-punc">{</span> 
+  <span class="sparql-variable">?resolvedPlan</span> <span class="sparql-prefix">a</span> <span class="sparql-prefix">ma:ResolvedSubPlan</span><span class="sparql-punc">;</span> <span class="sparql-prefix">ma:belongsToAgent</span> <span class="sparql-prefix">ma:agent-1</span> <span class="sparql-punc">.</span> 
+  <span class="sparql-keyword">FILTER EXISTS</span> <span class="sparql-punc">{</span> <span class="sparql-prefix">ma:FinalJointPlan</span> <span class="sparql-prefix">ma:composedOfSubPlans</span> <span class="sparql-variable">?resolvedPlan</span> <span class="sparql-punc">.</span> <span class="sparql-punc">}</span> 
+  <span class="sparql-variable">?resolvedPlan</span> <span class="sparql-prefix">ma:planData</span> <span class="sparql-variable">?seg1</span><span class="sparql-punc">,</span> <span class="sparql-variable">?seg2</span> <span class="sparql-punc">.</span> 
+  <span class="sparql-variable">?seg1</span> <span class="sparql-prefix">ma:hasPathSequence</span><span class="sparql-punc">/</span><span class="sparql-prefix">rdf:rest</span><span class="sparql-punc">*/</span><span class="sparql-prefix">rdf:first</span> <span class="sparql-variable">?locNode</span> <span class="sparql-punc">.</span> 
+  <span class="sparql-variable">?seg1</span> <span class="sparql-prefix">ma:hasValidTime</span><span class="sparql-punc">/</span><span class="sparql-prefix">time:hasBeginning</span><span class="sparql-punc">/</span><span class="sparql-prefix">time:inXSDDateTimeStamp</span> <span class="sparql-variable">?startTS</span> <span class="sparql-punc">.</span> 
+  <span class="sparql-variable">?seg2</span> <span class="sparql-prefix">ma:hasPathSequence</span><span class="sparql-punc">/</span><span class="sparql-prefix">rdf:rest</span><span class="sparql-punc">*/</span><span class="sparql-prefix">rdf:first</span> <span class="sparql-variable">?locNode</span> <span class="sparql-punc">.</span> 
+  <span class="sparql-variable">?seg2</span> <span class="sparql-prefix">ma:hasValidTime</span><span class="sparql-punc">/</span><span class="sparql-prefix">time:hasBeginning</span><span class="sparql-punc">/</span><span class="sparql-prefix">time:inXSDDateTimeStamp</span> <span class="sparql-variable">?endTS</span> <span class="sparql-punc">.</span> 
+  <span class="sparql-variable">?resolvedPlan</span> <span class="sparql-prefix">ma:resolvesConflict</span> <span class="sparql-variable">?conflict</span> <span class="sparql-punc">.</span> 
+  <span class="sparql-variable">?conflict</span> <span class="sparql-prefix">ma:involvesAgentsEvent</span> <span class="sparql-variable">?otherAgent</span> <span class="sparql-punc">;</span> 
+            <span class="sparql-prefix">ma:occursAtTime</span><span class="sparql-punc">/</span><span class="sparql-prefix">time:inXSDDateTimeStamp</span> <span class="sparql-variable">?conflictTS</span> <span class="sparql-punc">;</span> 
+            <span class="sparql-prefix">ma:conflictLocation</span> <span class="sparql-variable">?locNode</span> <span class="sparql-punc">.</span> 
+  <span class="sparql-variable">?locNode</span> <span class="sparql-prefix">ma:xCoordinate</span> <span class="sparql-variable">?x</span> <span class="sparql-punc">;</span> <span class="sparql-prefix">ma:yCoordinate</span> <span class="sparql-variable">?y</span> <span class="sparql-punc">.</span> 
+  <span class="sparql-keyword">FILTER</span><span class="sparql-punc">(</span><span class="sparql-variable">?otherAgent</span> <span class="sparql-punc">!=</span> <span class="sparql-prefix">ma:agent-1</span><span class="sparql-punc">)</span> 
+  <span class="sparql-keyword">BIND</span><span class="sparql-punc">(</span><span class="sparql-function">STRAFTER</span><span class="sparql-punc">(</span><span class="sparql-function">STR</span><span class="sparql-punc">(</span><span class="sparql-variable">?otherAgent</span><span class="sparql-punc">),</span> <span class="sparql-string">"#"</span><span class="sparql-punc">)</span> <span class="sparql-keyword">AS</span> <span class="sparql-variable">?otherAgentName</span><span class="sparql-punc">)</span> 
+<span class="sparql-punc">}</span></code></pre>
+                            <h4>Natural Language Template</h4>
+                            <pre><code>[Agent Name] had to wait for a total of [Total Wait] second(s) in its final plan. 
+This was necessary to avoid a planned conflict with [Other Agent Name] that would have occurred at ([X],[Y]) at T=[Conflict Time].</code></pre>
+                        </div>
+                        
+                        <div class="cq-item border border-gray-200 rounded-lg p-4 bg-white">
+                           <h3 class="!mt-0">C3, C5, C7: Show Plan Change & Rationale</h3>
+                            <p><strong>Purpose:</strong> This provides a complete audit trail of the planner's reasoning. It addresses contrastive questions ("Why this path and not the original one?") by showing the sequence of conflict-detection and resolution steps. It reveals not only *that* a plan changed, but also the specific strategy and justification (the <code>selectionRationale</code>) the planner used at each decision point, making the entire process transparent.</p>
+                            <h4>SPARQL Query</h4>
+                            <pre><code><span class="sparql-keyword">SELECT</span> <span class="sparql-variable">?planType</span> <span class="sparql-variable">?planCost</span> <span class="sparql-variable">?timestamp</span> <span class="sparql-variable">?x</span> <span class="sparql-variable">?y</span> <span class="sparql-variable">?rationale</span> <span class="sparql-punc">(</span><span class="sparql-function">GROUP_CONCAT</span><span class="sparql-punc">(</span><span class="sparql-keyword">DISTINCT</span> <span class="sparql-variable">?otherAgentName</span><span class="sparql-punc">)</span> <span class="sparql-keyword">AS</span> <span class="sparql-variable">?otherAgents</span><span class="sparql-punc">)</span>
+<span class="sparql-keyword">WHERE</span> <span class="sparql-punc">{</span>
+  <span class="sparql-keyword">BIND</span><span class="sparql-punc">(</span><span class="sparql-prefix">ma:agent-1</span> <span class="sparql-keyword">AS</span> <span class="sparql-variable">?agent</span><span class="sparql-punc">)</span>
+  <span class="sparql-punc">{</span> 
+    <span class="sparql-variable">?plan</span> <span class="sparql-prefix">a</span> <span class="sparql-prefix">ma:OriginalSubPlan</span> <span class="sparql-punc">;</span> <span class="sparql-prefix">ma:belongsToAgent</span> <span class="sparql-variable">?agent</span> <span class="sparql-punc">.</span>
+    <span class="sparql-keyword">BIND</span><span class="sparql-punc">(</span><span class="sparql-string">"Original Plan"</span> <span class="sparql-keyword">as</span> <span class="sparql-variable">?planType</span><span class="sparql-punc">)</span> <span class="sparql-punc">...</span>
+  <span class="sparql-punc">}</span> <span class="sparql-keyword">UNION</span> <span class="sparql-punc">{</span>
+    <span class="sparql-variable">?plan</span> <span class="sparql-prefix">a</span> <span class="sparql-prefix">ma:ResolvedSubPlan</span> <span class="sparql-punc">;</span>
+          <span class="sparql-prefix">ma:belongsToAgent</span> <span class="sparql-variable">?agent</span> <span class="sparql-punc">;</span>
+          <span class="sparql-prefix">ma:resolvesConflict</span> <span class="sparql-variable">?conflict</span> <span class="sparql-punc">;</span>
+          <span class="sparql-prefix">ma:generatedBy</span> <span class="sparql-variable">?activity</span> <span class="sparql-punc">.</span>
+    <span class="sparql-variable">?activity</span> <span class="sparql-prefix">prov:used</span><span class="sparql-punc">/</span><span class="sparql-prefix">ma:triggeredBy</span><span class="sparql-punc">/</span><span class="sparql-prefix">ma:selectionRationale</span> <span class="sparql-variable">?rationale</span> <span class="sparql-punc">.</span>
+    <span class="sparql-variable">?conflict</span> <span class="sparql-prefix">ma:occursAtTime</span><span class="sparql-punc">/</span><span class="sparql-prefix">time:inXSDDateTimeStamp</span> <span class="sparql-variable">?timestamp</span> <span class="sparql-punc">;</span>
+              <span class="sparql-prefix">ma:conflictLocation</span> <span class="sparql-variable">?locNode</span> <span class="sparql-punc">;</span>
+              <span class="sparql-prefix">ma:involvesAgentsEvent</span> <span class="sparql-variable">?otherAgent</span> <span class="sparql-punc">.</span>
+    <span class="sparql-variable">?locNode</span> <span class="sparql-prefix">ma:xCoordinate</span> <span class="sparql-variable">?x</span> <span class="sparql-punc">;</span> <span class="sparql-prefix">ma:yCoordinate</span> <span class="sparql-variable">?y</span> <span class="sparql-punc">.</span>
+    <span class="sparql-keyword">FILTER</span> <span class="sparql-punc">(</span><span class="sparql-variable">?otherAgent</span> <span class="sparql-punc">!=</span> <span class="sparql-variable">?agent</span><span class="sparql-punc">)</span>
+    <span class="sparql-keyword">BIND</span><span class="sparql-punc">(</span><span class="sparql-string">"Resolved Plan"</span> <span class="sparql-keyword">as</span> <span class="sparql-variable">?planType</span><span class="sparql-punc">)</span>
+    <span class="sparql-keyword">BIND</span><span class="sparql-punc">(</span><span class="sparql-function">STRAFTER</span><span class="sparql-punc">(</span><span class="sparql-function">STR</span><span class="sparql-punc">(</span><span class="sparql-variable">?otherAgent</span><span class="sparql-punc">),</span> <span class="sparql-string">"#"</span><span class="sparql-punc">)</span> <span class="sparql-keyword">as</span> <span class="sparql-variable">?otherAgentName</span><span class="sparql-punc">)</span>
+  <span class="sparql-punc">}</span>
+<span class="sparql-punc">}</span> <span class="sparql-keyword">GROUP BY</span> <span class="sparql-variable">?plan</span> <span class="sparql-variable">?planType</span> <span class="sparql-variable">?planCost</span> <span class="sparql-variable">?timestamp</span> <span class="sparql-variable">?x</span> <span class="sparql-variable">?y</span> <span class="sparql-variable">?rationale</span> <span class="sparql-keyword">ORDER BY</span> <span class="sparql-variable">?timestamp</span></code></pre>
+                            <h4>Natural Language Template</h4>
+                            <pre><code>A conflict occurred at location [Locations]. To resolve the conflict with [Other Agent Name], [Replanning Agent Name] changed its plan. 
+This changed the plan cost from [Original Cost] to [New Cost].
+Rationale: Using a [Alert Type] strategy, [Rationale].</code></pre>
+                        </div>
+                        
+                        <div class="cq-item border border-gray-200 rounded-lg p-4 bg-white">
+                           <h3 class="!mt-0">C6 & C8: Global & Agent-Specific Performance</h3>
+                            <p><strong>Purpose:</strong> These queries provide a high-level summary of the final solution's quality. C8 (makespan) is a key metric for overall efficiency, while C6 (per-agent cost) helps identify which agents had the most difficult or longest paths. This is essential for evaluating whether the plan is balanced and fair, or if certain agents bear a disproportionate burden.</p>
+                            <h4>SPARQL Queries</h4>
+                            <pre><code><span class="sparql-comment"># Query for Global Makespan (C8)</span>
+<span class="sparql-keyword">SELECT</span> <span class="sparql-variable">?makespan</span> <span class="sparql-keyword">WHERE</span> <span class="sparql-punc">{</span>
+  <span class="sparql-prefix">ma:FinalJointPlan</span> <span class="sparql-prefix">ma:hasGlobalMakespan</span> <span class="sparql-variable">?makespan</span> <span class="sparql-punc">.</span>
+<span class="sparql-punc">}</span>
+
+<span class="sparql-comment"># Query for Per-Agent Final Cost (C6)</span>
+<span class="sparql-keyword">SELECT</span> <span class="sparql-punc">(</span><span class="sparql-function">STRAFTER</span><span class="sparql-punc">(</span><span class="sparql-function">STR</span><span class="sparql-punc">(</span><span class="sparql-variable">?agent</span><span class="sparql-punc">),</span> <span class="sparql-string">"#"</span><span class="sparql-punc">)</span> <span class="sparql-keyword">AS</span> <span class="sparql-variable">?agentName</span><span class="sparql-punc">)</span> <span class="sparql-variable">?cost</span> <span class="sparql-keyword">WHERE</span> <span class="sparql-punc">{</span>
+  <span class="sparql-prefix">ma:FinalJointPlan</span> <span class="sparql-prefix">ma:composedOfSubPlans</span> <span class="sparql-variable">?plan</span> <span class="sparql-punc">.</span>
+  <span class="sparql-variable">?plan</span> <span class="sparql-prefix">ma:belongsToAgent</span> <span class="sparql-variable">?agent</span> <span class="sparql-punc">;</span>
+        <span class="sparql-prefix">ma:hasPlanCost</span> <span class="sparql-variable">?cost</span> <span class="sparql-punc">.</span>
+<span class="sparql-punc">}</span></code></pre>
+                            <h4>Natural Language Template</h4>
+                            <pre><code>Here is a summary of the final joint plan:
+The overall makespan is [Makespan].
+The sum of individual plan costs is [Sum of Costs].
+To achieve this solution, a total of [Replan Count] replans were required.</code></pre>
+                        </div>
+
+
+                    </div>
+                </section>
+
+                <!-- Demo Section -->
+                <section id="demo" class="content-section">
+                    <h2>Interactive Demo</h2>
+                    <p>Explore the capabilities of the maPO framework through our interactive dashboard. The demo allows you to upload a knowledge graph generated from a MAPF planner's trace and visually analyze the solution. You can step through the simulation, inspect conflicts, and ask natural language questions to generate real-time explanations.</p>
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><strong>Knowledge Graph Upload:</strong> Start by uploading a `.ttl` file containing the MAPF execution trace.</li>
+                        <li><strong>Grid Simulation:</strong> Visualize the multi-agent plan on a grid, with agents, obstacles, and paths clearly marked.</li>
+                        <li><strong>Time-Step Simulation:</strong> Use the slider to step through the plan execution and see agent movements over time.</li>
+                        <li><strong>Explanation Panel:</strong> Click on agents or grid cells to ask context-specific questions, or choose from a list of general queries to understand the plan's global properties.</li>
+                        <li><strong>SPARQL Query Interface:</strong> For advanced users, an integrated SPARQL editor allows you to run custom queries against the loaded knowledge graph.</li>
+                    </ul>
+                    
+                    <div class="my-8 text-center">
+                        <a href="demo.html" target="_blank" class="inline-block bg-primary text-white font-bold py-3 px-8 rounded-lg text-lg hover:bg-primary-dark transition-colors duration-300 shadow-lg">
+                            Launch the Demo
+                        </a>
+                    </div>
+                    
+                    <h3>Demo Video</h3>
+                     <div style="position: relative; padding-bottom: 56.25%; height: 0;" class="rounded-lg shadow-lg overflow-hidden my-8">
+                        <iframe src="https://drive.google.com/file/d/1FJ-Qm154FZXwJw94spUKh3PO3YzoqkcB/preview" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                    </div>
+
+                </section>
+
+            </div>
+             <!-- Footer -->
+            <footer class="text-center mt-12 text-gray-500 text-sm">
+                <p>&copy; 2025 MA-Ontology Project. All rights reserved.</p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('#sidebar-nav a');
+            const sections = document.querySelectorAll('.content-section');
+            const sidebar = document.getElementById('sidebar');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+
+            // --- Mobile Menu Toggle ---
+            mobileMenuButton.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+            });
+
+            // --- Sidebar Navigation and Section Visibility ---
+            function updateActiveState() {
+                let currentHash = window.location.hash || '#about';
+                
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === currentHash) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+
+                sections.forEach(section => {
+                    if ('#' + section.id === currentHash) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+                 // Close mobile menu on navigation
+                if (sidebar.classList.contains('md:relative') === false && !sidebar.classList.contains('-translate-x-full')) {
+                    sidebar.classList.add('-translate-x-full');
+                }
+            }
+
+            window.addEventListener('hashchange', updateActiveState);
+            
+            // Initial load
+            updateActiveState();
+        });
+    </script>
+
+</body>
+</html>
+
