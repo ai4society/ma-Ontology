@@ -166,7 +166,16 @@
                 <section id="about" class="content-section active">
                     <h2>About the Multi-Agent Planning Ontology (maPO)</h2>
                     <p>As multi-agent systems become more autonomous, particularly in complex coordination tasks like Multi-Agent Path Finding (MAPF), the need for transparent and interpretable decision-making becomes critical. While execution traces from MAPF algorithms provide rich insight, existing methods for explainability remain fragmented.</p>
-                    <p>We introduce the <strong>Multi-Agent Planning Ontology (maPO)</strong>, a unified semantic schema designed to transform raw MAPF traces into a single, queryable knowledge graph. This ontology formalizes key concepts like segmentation snapshots, conflict alerts, and replanning strategies, making the planner's behavior transparent and auditable.</p>
+                    <p>
+                      We introduce the <strong>Multi-Agent Planning Ontology (maPO)</strong>, a unified semantic schema designed to transform raw MAPF traces into a single, queryable knowledge graph. This ontology formalizes key concepts like segmentation snapshots, conflict alerts, and replanning strategies, making the planner's behavior transparent and auditable. 
+                      <br><br>
+                      <strong>History:</strong> MAPO builds on 
+                      <a href="https://ai4society.github.io/planning-ontology/" target="_blank" class="highlight-link">
+                        Planning Ontology (PO)
+                      </a> 
+                      and extends it to multi-agent planning needs.
+                    </p>
+
                     <h3>The Problem</h3>
                     <p>Coordinating multiple autonomous agents to reach individual goals without collisions is a foundational challenge in robotics and AI. Modern planners, search-based or learning-based approaches, achieve high performance but often act as "black boxes," offering little transparency into their decision-making processes. This lack of interpretability is a major barrier to deploying these systems in safety-critical applications.</p>
                     <h3>Our Solution</h3>
