@@ -1,0 +1,1468 @@
+@prefix : <http://example.org/ma-planning#> .
+@prefix ma: <http://example.org/ma#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix plan: <https://ai4society.github.io/planning-ontology#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ma:FinalJointPlan a ma:JointPlan ;
+    ma:composedOfSubPlans ma:Robot-1-Plan-Resolved,
+        ma:Robot-2-Plan-Resolved,
+        ma:Robot-3-Plan-Original ;
+    ma:hasGlobalMakespan 13.0 .
+
+ma:SimulatedWarehouseEnv a ma:Environment ;
+    ma:hasGridHeight 11 ;
+    ma:hasGridWidth 11 ;
+    ma:hasObstacle ma:Obs-0-0,
+        ma:Obs-0-1,
+        ma:Obs-0-10,
+        ma:Obs-0-2,
+        ma:Obs-0-3,
+        ma:Obs-0-4,
+        ma:Obs-0-5,
+        ma:Obs-0-6,
+        ma:Obs-0-7,
+        ma:Obs-0-8,
+        ma:Obs-0-9,
+        ma:Obs-1-0,
+        ma:Obs-1-1,
+        ma:Obs-1-10,
+        ma:Obs-1-2,
+        ma:Obs-1-3,
+        ma:Obs-1-4,
+        ma:Obs-1-5,
+        ma:Obs-1-6,
+        ma:Obs-1-7,
+        ma:Obs-1-8,
+        ma:Obs-1-9,
+        ma:Obs-10-0,
+        ma:Obs-10-1,
+        ma:Obs-10-10,
+        ma:Obs-10-2,
+        ma:Obs-10-3,
+        ma:Obs-10-4,
+        ma:Obs-10-5,
+        ma:Obs-10-6,
+        ma:Obs-10-7,
+        ma:Obs-10-8,
+        ma:Obs-10-9,
+        ma:Obs-2-0,
+        ma:Obs-2-1,
+        ma:Obs-2-10,
+        ma:Obs-2-2,
+        ma:Obs-2-3,
+        ma:Obs-2-4,
+        ma:Obs-2-5,
+        ma:Obs-2-6,
+        ma:Obs-2-7,
+        ma:Obs-2-8,
+        ma:Obs-2-9,
+        ma:Obs-3-0,
+        ma:Obs-3-1,
+        ma:Obs-3-10,
+        ma:Obs-3-2,
+        ma:Obs-3-3,
+        ma:Obs-3-4,
+        ma:Obs-3-5,
+        ma:Obs-3-6,
+        ma:Obs-3-7,
+        ma:Obs-3-8,
+        ma:Obs-3-9,
+        ma:Obs-4-0,
+        ma:Obs-4-1,
+        ma:Obs-4-10,
+        ma:Obs-4-2,
+        ma:Obs-4-3,
+        ma:Obs-4-7,
+        ma:Obs-4-8,
+        ma:Obs-4-9,
+        ma:Obs-5-0,
+        ma:Obs-5-1,
+        ma:Obs-5-10,
+        ma:Obs-5-2,
+        ma:Obs-5-3,
+        ma:Obs-5-4,
+        ma:Obs-5-6,
+        ma:Obs-5-7,
+        ma:Obs-5-8,
+        ma:Obs-5-9,
+        ma:Obs-6-0,
+        ma:Obs-6-1,
+        ma:Obs-6-10,
+        ma:Obs-6-2,
+        ma:Obs-6-3,
+        ma:Obs-6-7,
+        ma:Obs-6-8,
+        ma:Obs-6-9,
+        ma:Obs-7-0,
+        ma:Obs-7-1,
+        ma:Obs-7-10,
+        ma:Obs-7-2,
+        ma:Obs-7-3,
+        ma:Obs-7-4,
+        ma:Obs-7-5,
+        ma:Obs-7-6,
+        ma:Obs-7-7,
+        ma:Obs-7-8,
+        ma:Obs-7-9,
+        ma:Obs-8-0,
+        ma:Obs-8-1,
+        ma:Obs-8-10,
+        ma:Obs-8-2,
+        ma:Obs-8-3,
+        ma:Obs-8-4,
+        ma:Obs-8-5,
+        ma:Obs-8-6,
+        ma:Obs-8-7,
+        ma:Obs-8-8,
+        ma:Obs-8-9,
+        ma:Obs-9-0,
+        ma:Obs-9-1,
+        ma:Obs-9-10,
+        ma:Obs-9-2,
+        ma:Obs-9-3,
+        ma:Obs-9-4,
+        ma:Obs-9-5,
+        ma:Obs-9-6,
+        ma:Obs-9-7,
+        ma:Obs-9-8,
+        ma:Obs-9-9 .
+
+ma:Strategy-3 a ma:ReplanningStrategy ;
+    ma:triggeredBy ma:Alert-3 .
+
+<http://example.org/ma-planning> a owl:Ontology ;
+    owl:versionIRI <http://example.org/ma-planning/v1> .
+
+:actionSpace a owl:DatatypeProperty ;
+    rdfs:domain :AgentPolicy ;
+    rdfs:range xsd:string .
+
+:agentSelectionPolicy a owl:DatatypeProperty ;
+    rdfs:domain :PlannerProcedure ;
+    rdfs:range xsd:string .
+
+:alertID a owl:DatatypeProperty ;
+    rdfs:domain :ConflictAlert ;
+    rdfs:range xsd:string .
+
+:alertType a owl:DatatypeProperty ;
+    rdfs:domain :ConflictAlert ;
+    rdfs:range xsd:string .
+
+:alertsConflict a owl:ObjectProperty ;
+    rdfs:domain :ConflictAlert ;
+    rdfs:range :CollisionEvent .
+
+:belongsToAgent a owl:ObjectProperty ;
+    rdfs:domain :AgentSubPlan ;
+    rdfs:range :Agent .
+
+:belongsToAgentSegment a owl:ObjectProperty ;
+    rdfs:domain :AgentPathSegment ;
+    rdfs:range :Agent .
+
+:communicationOverhead a owl:DatatypeProperty ;
+    rdfs:domain :MultiAgentPlanner ;
+    rdfs:range xsd:string .
+
+:composedOfSubPlans a owl:ObjectProperty ;
+    rdfs:domain :JointPlan ;
+    rdfs:range :AgentSubPlan .
+
+:conflictID a owl:DatatypeProperty ;
+    rdfs:domain :CollisionEvent ;
+    rdfs:range xsd:string .
+
+:conflictLocation a owl:ObjectProperty ;
+    rdfs:domain :CollisionEvent ;
+    rdfs:range plan:Location .
+
+:conflictResolutionProtocol a owl:DatatypeProperty ;
+    rdfs:domain :JointPlan ;
+    rdfs:range xsd:string .
+
+:conflictType a owl:DatatypeProperty ;
+    rdfs:domain :ConflictConstraint ;
+    rdfs:range xsd:string .
+
+:conflictTypeEvent a owl:DatatypeProperty ;
+    rdfs:domain :CollisionEvent ;
+    rdfs:range xsd:string .
+
+:dynamicForbiddenPath a owl:ObjectProperty ;
+    rdfs:domain :ConflictAlert ;
+    rdfs:range :AgentPathSegment .
+
+:executesAction a owl:ObjectProperty ;
+    rdfs:domain :Agent ;
+    rdfs:range plan:Action .
+
+:forbiddenRegion a owl:ObjectProperty ;
+    rdfs:domain :ConflictConstraint ;
+    rdfs:range plan:Region .
+
+:fromTime a owl:DatatypeProperty ;
+    rdfs:domain :AgentPathSegment ;
+    rdfs:range xsd:integer .
+
+:generatesPlan a owl:ObjectProperty ;
+    rdfs:domain :MultiAgentPlanner ;
+    rdfs:range plan:Plan .
+
+:hasAgentID a owl:DatatypeProperty ;
+    rdfs:domain :Agent ;
+    rdfs:range xsd:string .
+
+:hasAgentSet a owl:ObjectProperty ;
+    rdfs:domain plan:PlanningProblem ;
+    rdfs:range :Agent .
+
+:hasCapability a owl:DatatypeProperty ;
+    rdfs:domain :Agent ;
+    rdfs:range xsd:string .
+
+:hasChannel a owl:DatatypeProperty ;
+    rdfs:domain :ObservationMaskSpec ;
+    rdfs:range xsd:string .
+
+:hasConflictConstraint a owl:ObjectProperty ;
+    rdfs:domain plan:PlanningProblem ;
+    rdfs:range :ConflictConstraint .
+
+:hasGlobalMakespan a owl:DatatypeProperty ;
+    rdfs:domain :JointPlan ;
+    rdfs:range xsd:decimal .
+
+:hasGoalLocation a owl:ObjectProperty ;
+    rdfs:domain :Agent ;
+    rdfs:range plan:Location .
+
+:hasGoalStates a owl:ObjectProperty ;
+    rdfs:domain plan:PlanningProblem ;
+    rdfs:range :AgentState .
+
+:hasInitialLocation a owl:ObjectProperty ;
+    rdfs:domain :Agent ;
+    rdfs:range plan:Location .
+
+:hasInitialStates a owl:ObjectProperty ;
+    rdfs:domain plan:PlanningProblem ;
+    rdfs:range :AgentState .
+
+:hasPerformanceTradeoff a owl:DatatypeProperty ;
+    rdfs:domain :MultiAgentPlanner ;
+    rdfs:range xsd:string .
+
+:hasPlanCost a owl:DatatypeProperty ;
+    rdfs:domain :AgentSubPlan ;
+    rdfs:range xsd:decimal .
+
+:hasRationale a owl:DatatypeProperty ;
+    rdfs:domain :PlannerProcedure ;
+    rdfs:range xsd:string .
+
+:implementsProcedure a owl:ObjectProperty ;
+    rdfs:domain :MultiAgentPlanner ;
+    rdfs:range :PlannerProcedure .
+
+:implementsStage a owl:DatatypeProperty ;
+    rdfs:domain :PlannerProcedure ;
+    rdfs:range xsd:string .
+
+:involvesAgents a owl:ObjectProperty ;
+    rdfs:domain :ConflictConstraint ;
+    rdfs:range :Agent .
+
+:involvesAgentsEvent a owl:ObjectProperty ;
+    rdfs:domain :CollisionEvent ;
+    rdfs:range :Agent .
+
+:isDerivedFromConflict a owl:ObjectProperty ;
+    rdfs:domain :AgentSubPlan ;
+    rdfs:range :CollisionEvent .
+
+:maskDimension a owl:DatatypeProperty ;
+    rdfs:domain :ObservationMaskSpec ;
+    rdfs:range xsd:string .
+
+:observationChannels a owl:DatatypeProperty ;
+    rdfs:domain :AgentPolicy ;
+    rdfs:range xsd:string .
+
+:observedForbiddenCells a owl:ObjectProperty ;
+    rdfs:domain :ReplanningStrategy ;
+    rdfs:range plan:Cell .
+
+:observedForbiddenSegment a owl:ObjectProperty ;
+    rdfs:domain :ReplanningStrategy ;
+    rdfs:range :AgentPathSegment .
+
+:occursAtTime a owl:DatatypeProperty ;
+    rdfs:domain :CollisionEvent ;
+    rdfs:range xsd:dateTime .
+
+:ofPlannerType a owl:DatatypeProperty ;
+    rdfs:domain :MultiAgentPlanner ;
+    rdfs:range xsd:string .
+
+:pathCells a owl:ObjectProperty ;
+    rdfs:domain :AgentPathSegment ;
+    rdfs:range plan:Cell .
+
+:planData a owl:DatatypeProperty ;
+    rdfs:domain :AgentSubPlan,
+        :JointPlan ;
+    rdfs:range xsd:string .
+
+:policyName a owl:DatatypeProperty ;
+    rdfs:domain :AgentPolicy ;
+    rdfs:range xsd:string .
+
+:procedureID a owl:DatatypeProperty ;
+    rdfs:domain :PlannerProcedure ;
+    rdfs:range xsd:string .
+
+:rewindWindow a owl:DatatypeProperty ;
+    rdfs:domain :ConflictAlert ;
+    rdfs:range xsd:integer .
+
+:rewindWindowDefault a owl:DatatypeProperty ;
+    rdfs:domain :PlannerProcedure ;
+    rdfs:range xsd:integer .
+
+:staticForbiddenCells a owl:ObjectProperty ;
+    rdfs:domain :ConflictAlert ;
+    rdfs:range plan:Cell .
+
+:strategyID a owl:DatatypeProperty ;
+    rdfs:domain :ReplanningStrategy ;
+    rdfs:range xsd:string .
+
+:supportsConflictDetection a owl:DatatypeProperty ;
+    rdfs:domain :MultiAgentPlanner ;
+    rdfs:range xsd:boolean .
+
+:targetAgent a owl:ObjectProperty ;
+    rdfs:domain :ConflictAlert ;
+    rdfs:range :Agent .
+
+:toTime a owl:DatatypeProperty ;
+    rdfs:domain :AgentPathSegment ;
+    rdfs:range xsd:integer .
+
+:trainedOnEnvironment a owl:DatatypeProperty ;
+    rdfs:domain :AgentPolicy ;
+    rdfs:range xsd:string .
+
+:usedAlertSet a owl:ObjectProperty ;
+    rdfs:domain :JointPlan ;
+    rdfs:range :ConflictAlert .
+
+:usedDynamicReplanning a owl:DatatypeProperty ;
+    rdfs:domain :ReplanningStrategy ;
+    rdfs:range xsd:boolean .
+
+:usedStaticReplanning a owl:DatatypeProperty ;
+    rdfs:domain :ReplanningStrategy ;
+    rdfs:range xsd:boolean .
+
+ma:Alert-1 a ma:ConflictAlert ;
+    ma:alertsConflict ma:Collision-v-1-6-5 ;
+    ma:selectionRationale "Conflict where both agents involved will incur an increased path cost regardless of how the conflict is resolved, making it a high-priority conflict." ;
+    ma:targetAgent ma:Robot-2 .
+
+ma:Alert-2 a ma:ConflictAlert ;
+    ma:alertsConflict ma:Collision-v-2-5-5 ;
+    ma:selectionRationale "Conflict where only one of the agents involved will incur an increased path cost, while the other might not, offering partial flexibility." ;
+    ma:targetAgent ma:Robot-1 .
+
+ma:Alert-3 a ma:ConflictAlert ;
+    ma:alertsConflict ma:Collision-v-3-4-5 ;
+    ma:selectionRationale "Conflict where neither agent's path cost is guaranteed to increase upon resolution, suggesting a lower impact on overall solution cost." ;
+    ma:targetAgent ma:Robot-2 .
+
+ma:Collision-v-3-4-5 a ma:CollisionEvent ;
+    ma:conflictLocation [ a ma:GridLocation ;
+            ma:xCoordinate 4 ;
+            ma:yCoordinate 5 ] ;
+    ma:conflictTypeEvent "vertex" ;
+    ma:involvesAgentsEvent ma:Robot-2,
+        ma:Robot-3 ;
+    ma:occursAtTime ma:time_instant_3 .
+
+ma:Obs-0-0 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 0 ;
+            ma:yCoordinate 0 ] .
+
+ma:Obs-0-1 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 0 ;
+            ma:yCoordinate 1 ] .
+
+ma:Obs-0-10 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 0 ;
+            ma:yCoordinate 10 ] .
+
+ma:Obs-0-2 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 0 ;
+            ma:yCoordinate 2 ] .
+
+ma:Obs-0-3 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 0 ;
+            ma:yCoordinate 3 ] .
+
+ma:Obs-0-4 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 0 ;
+            ma:yCoordinate 4 ] .
+
+ma:Obs-0-5 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 0 ;
+            ma:yCoordinate 5 ] .
+
+ma:Obs-0-6 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 0 ;
+            ma:yCoordinate 6 ] .
+
+ma:Obs-0-7 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 0 ;
+            ma:yCoordinate 7 ] .
+
+ma:Obs-0-8 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 0 ;
+            ma:yCoordinate 8 ] .
+
+ma:Obs-0-9 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 0 ;
+            ma:yCoordinate 9 ] .
+
+ma:Obs-1-0 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 1 ;
+            ma:yCoordinate 0 ] .
+
+ma:Obs-1-1 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 1 ;
+            ma:yCoordinate 1 ] .
+
+ma:Obs-1-10 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 1 ;
+            ma:yCoordinate 10 ] .
+
+ma:Obs-1-2 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 1 ;
+            ma:yCoordinate 2 ] .
+
+ma:Obs-1-3 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 1 ;
+            ma:yCoordinate 3 ] .
+
+ma:Obs-1-4 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 1 ;
+            ma:yCoordinate 4 ] .
+
+ma:Obs-1-5 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 1 ;
+            ma:yCoordinate 5 ] .
+
+ma:Obs-1-6 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 1 ;
+            ma:yCoordinate 6 ] .
+
+ma:Obs-1-7 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 1 ;
+            ma:yCoordinate 7 ] .
+
+ma:Obs-1-8 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 1 ;
+            ma:yCoordinate 8 ] .
+
+ma:Obs-1-9 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 1 ;
+            ma:yCoordinate 9 ] .
+
+ma:Obs-10-0 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 10 ;
+            ma:yCoordinate 0 ] .
+
+ma:Obs-10-1 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 10 ;
+            ma:yCoordinate 1 ] .
+
+ma:Obs-10-10 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 10 ;
+            ma:yCoordinate 10 ] .
+
+ma:Obs-10-2 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 10 ;
+            ma:yCoordinate 2 ] .
+
+ma:Obs-10-3 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 10 ;
+            ma:yCoordinate 3 ] .
+
+ma:Obs-10-4 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 10 ;
+            ma:yCoordinate 4 ] .
+
+ma:Obs-10-5 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 10 ;
+            ma:yCoordinate 5 ] .
+
+ma:Obs-10-6 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 10 ;
+            ma:yCoordinate 6 ] .
+
+ma:Obs-10-7 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 10 ;
+            ma:yCoordinate 7 ] .
+
+ma:Obs-10-8 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 10 ;
+            ma:yCoordinate 8 ] .
+
+ma:Obs-10-9 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 10 ;
+            ma:yCoordinate 9 ] .
+
+ma:Obs-2-0 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 2 ;
+            ma:yCoordinate 0 ] .
+
+ma:Obs-2-1 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 2 ;
+            ma:yCoordinate 1 ] .
+
+ma:Obs-2-10 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 2 ;
+            ma:yCoordinate 10 ] .
+
+ma:Obs-2-2 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 2 ;
+            ma:yCoordinate 2 ] .
+
+ma:Obs-2-3 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 2 ;
+            ma:yCoordinate 3 ] .
+
+ma:Obs-2-4 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 2 ;
+            ma:yCoordinate 4 ] .
+
+ma:Obs-2-5 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 2 ;
+            ma:yCoordinate 5 ] .
+
+ma:Obs-2-6 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 2 ;
+            ma:yCoordinate 6 ] .
+
+ma:Obs-2-7 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 2 ;
+            ma:yCoordinate 7 ] .
+
+ma:Obs-2-8 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 2 ;
+            ma:yCoordinate 8 ] .
+
+ma:Obs-2-9 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 2 ;
+            ma:yCoordinate 9 ] .
+
+ma:Obs-3-0 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 3 ;
+            ma:yCoordinate 0 ] .
+
+ma:Obs-3-1 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 3 ;
+            ma:yCoordinate 1 ] .
+
+ma:Obs-3-10 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 3 ;
+            ma:yCoordinate 10 ] .
+
+ma:Obs-3-2 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 3 ;
+            ma:yCoordinate 2 ] .
+
+ma:Obs-3-3 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 3 ;
+            ma:yCoordinate 3 ] .
+
+ma:Obs-3-4 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 3 ;
+            ma:yCoordinate 4 ] .
+
+ma:Obs-3-5 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 3 ;
+            ma:yCoordinate 5 ] .
+
+ma:Obs-3-6 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 3 ;
+            ma:yCoordinate 6 ] .
+
+ma:Obs-3-7 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 3 ;
+            ma:yCoordinate 7 ] .
+
+ma:Obs-3-8 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 3 ;
+            ma:yCoordinate 8 ] .
+
+ma:Obs-3-9 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 3 ;
+            ma:yCoordinate 9 ] .
+
+ma:Obs-4-0 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 4 ;
+            ma:yCoordinate 0 ] .
+
+ma:Obs-4-1 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 4 ;
+            ma:yCoordinate 1 ] .
+
+ma:Obs-4-10 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 4 ;
+            ma:yCoordinate 10 ] .
+
+ma:Obs-4-2 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 4 ;
+            ma:yCoordinate 2 ] .
+
+ma:Obs-4-3 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 4 ;
+            ma:yCoordinate 3 ] .
+
+ma:Obs-4-7 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 4 ;
+            ma:yCoordinate 7 ] .
+
+ma:Obs-4-8 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 4 ;
+            ma:yCoordinate 8 ] .
+
+ma:Obs-4-9 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 4 ;
+            ma:yCoordinate 9 ] .
+
+ma:Obs-5-0 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 5 ;
+            ma:yCoordinate 0 ] .
+
+ma:Obs-5-1 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 5 ;
+            ma:yCoordinate 1 ] .
+
+ma:Obs-5-10 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 5 ;
+            ma:yCoordinate 10 ] .
+
+ma:Obs-5-2 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 5 ;
+            ma:yCoordinate 2 ] .
+
+ma:Obs-5-3 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 5 ;
+            ma:yCoordinate 3 ] .
+
+ma:Obs-5-4 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 5 ;
+            ma:yCoordinate 4 ] .
+
+ma:Obs-5-6 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 5 ;
+            ma:yCoordinate 6 ] .
+
+ma:Obs-5-7 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 5 ;
+            ma:yCoordinate 7 ] .
+
+ma:Obs-5-8 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 5 ;
+            ma:yCoordinate 8 ] .
+
+ma:Obs-5-9 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 5 ;
+            ma:yCoordinate 9 ] .
+
+ma:Obs-6-0 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 6 ;
+            ma:yCoordinate 0 ] .
+
+ma:Obs-6-1 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 6 ;
+            ma:yCoordinate 1 ] .
+
+ma:Obs-6-10 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 6 ;
+            ma:yCoordinate 10 ] .
+
+ma:Obs-6-2 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 6 ;
+            ma:yCoordinate 2 ] .
+
+ma:Obs-6-3 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 6 ;
+            ma:yCoordinate 3 ] .
+
+ma:Obs-6-7 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 6 ;
+            ma:yCoordinate 7 ] .
+
+ma:Obs-6-8 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 6 ;
+            ma:yCoordinate 8 ] .
+
+ma:Obs-6-9 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 6 ;
+            ma:yCoordinate 9 ] .
+
+ma:Obs-7-0 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 7 ;
+            ma:yCoordinate 0 ] .
+
+ma:Obs-7-1 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 7 ;
+            ma:yCoordinate 1 ] .
+
+ma:Obs-7-10 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 7 ;
+            ma:yCoordinate 10 ] .
+
+ma:Obs-7-2 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 7 ;
+            ma:yCoordinate 2 ] .
+
+ma:Obs-7-3 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 7 ;
+            ma:yCoordinate 3 ] .
+
+ma:Obs-7-4 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 7 ;
+            ma:yCoordinate 4 ] .
+
+ma:Obs-7-5 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 7 ;
+            ma:yCoordinate 5 ] .
+
+ma:Obs-7-6 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 7 ;
+            ma:yCoordinate 6 ] .
+
+ma:Obs-7-7 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 7 ;
+            ma:yCoordinate 7 ] .
+
+ma:Obs-7-8 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 7 ;
+            ma:yCoordinate 8 ] .
+
+ma:Obs-7-9 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 7 ;
+            ma:yCoordinate 9 ] .
+
+ma:Obs-8-0 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 8 ;
+            ma:yCoordinate 0 ] .
+
+ma:Obs-8-1 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 8 ;
+            ma:yCoordinate 1 ] .
+
+ma:Obs-8-10 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 8 ;
+            ma:yCoordinate 10 ] .
+
+ma:Obs-8-2 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 8 ;
+            ma:yCoordinate 2 ] .
+
+ma:Obs-8-3 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 8 ;
+            ma:yCoordinate 3 ] .
+
+ma:Obs-8-4 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 8 ;
+            ma:yCoordinate 4 ] .
+
+ma:Obs-8-5 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 8 ;
+            ma:yCoordinate 5 ] .
+
+ma:Obs-8-6 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 8 ;
+            ma:yCoordinate 6 ] .
+
+ma:Obs-8-7 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 8 ;
+            ma:yCoordinate 7 ] .
+
+ma:Obs-8-8 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 8 ;
+            ma:yCoordinate 8 ] .
+
+ma:Obs-8-9 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 8 ;
+            ma:yCoordinate 9 ] .
+
+ma:Obs-9-0 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 9 ;
+            ma:yCoordinate 0 ] .
+
+ma:Obs-9-1 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 9 ;
+            ma:yCoordinate 1 ] .
+
+ma:Obs-9-10 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 9 ;
+            ma:yCoordinate 10 ] .
+
+ma:Obs-9-2 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 9 ;
+            ma:yCoordinate 2 ] .
+
+ma:Obs-9-3 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 9 ;
+            ma:yCoordinate 3 ] .
+
+ma:Obs-9-4 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 9 ;
+            ma:yCoordinate 4 ] .
+
+ma:Obs-9-5 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 9 ;
+            ma:yCoordinate 5 ] .
+
+ma:Obs-9-6 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 9 ;
+            ma:yCoordinate 6 ] .
+
+ma:Obs-9-7 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 9 ;
+            ma:yCoordinate 7 ] .
+
+ma:Obs-9-8 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 9 ;
+            ma:yCoordinate 8 ] .
+
+ma:Obs-9-9 a ma:Obstacle ;
+    ma:atLocation [ a ma:GridLocation ;
+            ma:xCoordinate 9 ;
+            ma:yCoordinate 9 ] .
+
+ma:Robot-1-Plan-Original a ma:OriginalSubPlan ;
+    ma:belongsToAgent ma:Robot-1 ;
+    ma:hasPlanCost 4.0 ;
+    ma:planData ma:Robot-1-Plan-Original_seg0,
+        ma:Robot-1-Plan-Original_seg1,
+        ma:Robot-1-Plan-Original_seg2,
+        ma:Robot-1-Plan-Original_seg3,
+        ma:Robot-1-Plan-Original_seg4 .
+
+ma:Robot-1-Plan-Original_seg0 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 4 ;
+                ma:yCoordinate 4 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_0 ;
+            time:hasEnd ma:time_instant_1 ] .
+
+ma:Robot-1-Plan-Original_seg1 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 4 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_1 ;
+            time:hasEnd ma:time_instant_2 ] .
+
+ma:Robot-1-Plan-Original_seg2 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 5 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_2 ;
+            time:hasEnd ma:time_instant_3 ] .
+
+ma:Robot-1-Plan-Original_seg3 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 6 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_3 ;
+            time:hasEnd ma:time_instant_4 ] .
+
+ma:Robot-1-Plan-Original_seg4 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 6 ;
+                ma:yCoordinate 4 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_4 ;
+            time:hasEnd ma:time_instant_5 ] .
+
+ma:Robot-1-Plan-Resolved a ma:ResolvedSubPlan ;
+    ma:belongsToAgent ma:Robot-1 ;
+    ma:derivesFrom ma:Robot-1-Plan-Original ;
+    ma:generatedBy ma:Robot-1-Plan-Resolved_activity ;
+    ma:hasPlanCost 9.0 ;
+    ma:planData ma:Robot-1-Plan-Resolved_seg0,
+        ma:Robot-1-Plan-Resolved_seg1,
+        ma:Robot-1-Plan-Resolved_seg2,
+        ma:Robot-1-Plan-Resolved_seg3,
+        ma:Robot-1-Plan-Resolved_seg4,
+        ma:Robot-1-Plan-Resolved_seg5,
+        ma:Robot-1-Plan-Resolved_seg6,
+        ma:Robot-1-Plan-Resolved_seg7,
+        ma:Robot-1-Plan-Resolved_seg8,
+        ma:Robot-1-Plan-Resolved_seg9 ;
+    ma:resolvesConflict ma:Collision-v-2-5-5 .
+
+ma:Robot-1-Plan-Resolved_activity a prov:Activity ;
+    prov:used ma:Strategy-2 .
+
+ma:Robot-1-Plan-Resolved_seg0 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 4 ;
+                ma:yCoordinate 4 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_0 ;
+            time:hasEnd ma:time_instant_1 ] .
+
+ma:Robot-1-Plan-Resolved_seg1 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 4 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_1 ;
+            time:hasEnd ma:time_instant_2 ] .
+
+ma:Robot-1-Plan-Resolved_seg2 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 4 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_2 ;
+            time:hasEnd ma:time_instant_3 ] .
+
+ma:Robot-1-Plan-Resolved_seg3 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 4 ;
+                ma:yCoordinate 4 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_3 ;
+            time:hasEnd ma:time_instant_4 ] .
+
+ma:Robot-1-Plan-Resolved_seg4 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 4 ;
+                ma:yCoordinate 4 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_4 ;
+            time:hasEnd ma:time_instant_5 ] .
+
+ma:Robot-1-Plan-Resolved_seg5 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 4 ;
+                ma:yCoordinate 4 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_5 ;
+            time:hasEnd ma:time_instant_6 ] .
+
+ma:Robot-1-Plan-Resolved_seg6 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 4 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_6 ;
+            time:hasEnd ma:time_instant_7 ] .
+
+ma:Robot-1-Plan-Resolved_seg7 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 5 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_7 ;
+            time:hasEnd ma:time_instant_8 ] .
+
+ma:Robot-1-Plan-Resolved_seg8 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 6 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_8 ;
+            time:hasEnd ma:time_instant_9 ] .
+
+ma:Robot-1-Plan-Resolved_seg9 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 6 ;
+                ma:yCoordinate 4 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_9 ;
+            time:hasEnd ma:time_instant_10 ] .
+
+ma:Robot-2-Plan-Original a ma:OriginalSubPlan ;
+    ma:belongsToAgent ma:Robot-2 ;
+    ma:hasPlanCost 4.0 ;
+    ma:planData ma:Robot-2-Plan-Original_seg0,
+        ma:Robot-2-Plan-Original_seg1,
+        ma:Robot-2-Plan-Original_seg2,
+        ma:Robot-2-Plan-Original_seg3,
+        ma:Robot-2-Plan-Original_seg4 .
+
+ma:Robot-2-Plan-Original_seg0 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 6 ;
+                ma:yCoordinate 4 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_0 ;
+            time:hasEnd ma:time_instant_1 ] .
+
+ma:Robot-2-Plan-Original_seg1 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 6 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_1 ;
+            time:hasEnd ma:time_instant_2 ] .
+
+ma:Robot-2-Plan-Original_seg2 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 5 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_2 ;
+            time:hasEnd ma:time_instant_3 ] .
+
+ma:Robot-2-Plan-Original_seg3 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 4 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_3 ;
+            time:hasEnd ma:time_instant_4 ] .
+
+ma:Robot-2-Plan-Original_seg4 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 4 ;
+                ma:yCoordinate 4 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_4 ;
+            time:hasEnd ma:time_instant_5 ] .
+
+ma:Robot-2-Plan-Resolved a ma:ResolvedSubPlan ;
+    ma:belongsToAgent ma:Robot-2 ;
+    ma:derivesFrom ma:Robot-2-Plan-Original ;
+    ma:generatedBy ma:Robot-2-Plan-Resolved_activity ;
+    ma:hasPlanCost 12.0 ;
+    ma:planData ma:Robot-2-Plan-Resolved_seg0,
+        ma:Robot-2-Plan-Resolved_seg1,
+        ma:Robot-2-Plan-Resolved_seg10,
+        ma:Robot-2-Plan-Resolved_seg11,
+        ma:Robot-2-Plan-Resolved_seg12,
+        ma:Robot-2-Plan-Resolved_seg2,
+        ma:Robot-2-Plan-Resolved_seg3,
+        ma:Robot-2-Plan-Resolved_seg4,
+        ma:Robot-2-Plan-Resolved_seg5,
+        ma:Robot-2-Plan-Resolved_seg6,
+        ma:Robot-2-Plan-Resolved_seg7,
+        ma:Robot-2-Plan-Resolved_seg8,
+        ma:Robot-2-Plan-Resolved_seg9 ;
+    ma:resolvesConflict ma:Collision-v-1-6-5 .
+
+ma:Robot-2-Plan-Resolved_activity a prov:Activity ;
+    prov:used ma:Strategy-1 .
+
+ma:Robot-2-Plan-Resolved_seg0 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 6 ;
+                ma:yCoordinate 4 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_0 ;
+            time:hasEnd ma:time_instant_1 ] .
+
+ma:Robot-2-Plan-Resolved_seg1 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 6 ;
+                ma:yCoordinate 4 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_1 ;
+            time:hasEnd ma:time_instant_2 ] .
+
+ma:Robot-2-Plan-Resolved_seg10 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 5 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_10 ;
+            time:hasEnd ma:time_instant_11 ] .
+
+ma:Robot-2-Plan-Resolved_seg11 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 4 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_11 ;
+            time:hasEnd ma:time_instant_12 ] .
+
+ma:Robot-2-Plan-Resolved_seg12 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 4 ;
+                ma:yCoordinate 4 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_12 ;
+            time:hasEnd ma:time_instant_13 ] .
+
+ma:Robot-2-Plan-Resolved_seg2 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 6 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_2 ;
+            time:hasEnd ma:time_instant_3 ] .
+
+ma:Robot-2-Plan-Resolved_seg3 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 5 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_3 ;
+            time:hasEnd ma:time_instant_4 ] .
+
+ma:Robot-2-Plan-Resolved_seg4 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 4 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_4 ;
+            time:hasEnd ma:time_instant_5 ] .
+
+ma:Robot-2-Plan-Resolved_seg5 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 4 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_5 ;
+            time:hasEnd ma:time_instant_6 ] .
+
+ma:Robot-2-Plan-Resolved_seg6 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 5 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_6 ;
+            time:hasEnd ma:time_instant_7 ] .
+
+ma:Robot-2-Plan-Resolved_seg7 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 6 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_7 ;
+            time:hasEnd ma:time_instant_8 ] .
+
+ma:Robot-2-Plan-Resolved_seg8 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 6 ;
+                ma:yCoordinate 6 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_8 ;
+            time:hasEnd ma:time_instant_9 ] .
+
+ma:Robot-2-Plan-Resolved_seg9 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 6 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_9 ;
+            time:hasEnd ma:time_instant_10 ] .
+
+ma:Robot-3-Plan-Original a ma:OriginalSubPlan ;
+    ma:belongsToAgent ma:Robot-3 ;
+    ma:hasPlanCost 4.0 ;
+    ma:planData ma:Robot-3-Plan-Original_seg0,
+        ma:Robot-3-Plan-Original_seg1,
+        ma:Robot-3-Plan-Original_seg2,
+        ma:Robot-3-Plan-Original_seg3,
+        ma:Robot-3-Plan-Original_seg4 .
+
+ma:Robot-3-Plan-Original_seg0 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 6 ;
+                ma:yCoordinate 6 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_0 ;
+            time:hasEnd ma:time_instant_1 ] .
+
+ma:Robot-3-Plan-Original_seg1 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 6 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_1 ;
+            time:hasEnd ma:time_instant_2 ] .
+
+ma:Robot-3-Plan-Original_seg2 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 5 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_2 ;
+            time:hasEnd ma:time_instant_3 ] .
+
+ma:Robot-3-Plan-Original_seg3 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 4 ;
+                ma:yCoordinate 5 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_3 ;
+            time:hasEnd ma:time_instant_4 ] .
+
+ma:Robot-3-Plan-Original_seg4 a ma:AgentPathSegment ;
+    ma:hasPathSequence ( [ a ma:GridLocation ;
+                ma:xCoordinate 4 ;
+                ma:yCoordinate 6 ] ) ;
+    ma:hasValidTime [ a time:Interval ;
+            time:hasBeginning ma:time_instant_4 ;
+            time:hasEnd ma:time_instant_5 ] .
+
+ma:Strategy-1 a ma:ReplanningStrategy ;
+    ma:triggeredBy ma:Alert-1 .
+
+ma:Strategy-2 a ma:ReplanningStrategy ;
+    ma:triggeredBy ma:Alert-2 .
+
+ma:time_instant_13 a time:Instant ;
+    time:inXSDDateTimeStamp "1970-01-01T00:00:13Z"^^xsd:dateTimeStamp .
+
+ma:Collision-v-1-6-5 a ma:CollisionEvent ;
+    ma:conflictLocation [ a ma:GridLocation ;
+            ma:xCoordinate 6 ;
+            ma:yCoordinate 5 ] ;
+    ma:conflictTypeEvent "vertex" ;
+    ma:involvesAgentsEvent ma:Robot-2,
+        ma:Robot-3 ;
+    ma:occursAtTime ma:time_instant_1 .
+
+ma:Collision-v-2-5-5 a ma:CollisionEvent ;
+    ma:conflictLocation [ a ma:GridLocation ;
+            ma:xCoordinate 5 ;
+            ma:yCoordinate 5 ] ;
+    ma:conflictTypeEvent "vertex" ;
+    ma:involvesAgentsEvent ma:Robot-1,
+        ma:Robot-2,
+        ma:Robot-3 ;
+    ma:occursAtTime ma:time_instant_2 .
+
+ma:time_instant_11 a time:Instant ;
+    time:inXSDDateTimeStamp "1970-01-01T00:00:11Z"^^xsd:dateTimeStamp .
+
+ma:time_instant_12 a time:Instant ;
+    time:inXSDDateTimeStamp "1970-01-01T00:00:12Z"^^xsd:dateTimeStamp .
+
+:AgentState a owl:Class ;
+    rdfs:subClassOf plan:State .
+
+:ObservationMaskSpec a owl:Class .
+
+ma:time_instant_10 a time:Instant ;
+    time:inXSDDateTimeStamp "1970-01-01T00:00:10Z"^^xsd:dateTimeStamp .
+
+ma:Robot-1 a ma:Agent,
+        sosa:Platform ;
+    ma:hasGoalLocation [ a ma:GridLocation ;
+            ma:xCoordinate 6 ;
+            ma:yCoordinate 4 ] ;
+    ma:hasInitialLocation [ a ma:GridLocation ;
+            ma:xCoordinate 4 ;
+            ma:yCoordinate 4 ] .
+
+ma:Robot-3 a ma:Agent,
+        sosa:Platform ;
+    ma:hasGoalLocation [ a ma:GridLocation ;
+            ma:xCoordinate 4 ;
+            ma:yCoordinate 6 ] ;
+    ma:hasInitialLocation [ a ma:GridLocation ;
+            ma:xCoordinate 6 ;
+            ma:yCoordinate 6 ] .
+
+ma:time_instant_6 a time:Instant ;
+    time:inXSDDateTimeStamp "1970-01-01T00:00:06Z"^^xsd:dateTimeStamp .
+
+ma:time_instant_7 a time:Instant ;
+    time:inXSDDateTimeStamp "1970-01-01T00:00:07Z"^^xsd:dateTimeStamp .
+
+ma:time_instant_8 a time:Instant ;
+    time:inXSDDateTimeStamp "1970-01-01T00:00:08Z"^^xsd:dateTimeStamp .
+
+ma:time_instant_9 a time:Instant ;
+    time:inXSDDateTimeStamp "1970-01-01T00:00:09Z"^^xsd:dateTimeStamp .
+
+:AgentPolicy a owl:Class .
+
+:ConflictConstraint a owl:Class ;
+    rdfs:subClassOf plan:DomainRequirement .
+
+ma:time_instant_0 a time:Instant ;
+    time:inXSDDateTimeStamp "1970-01-01T00:00:00Z"^^xsd:dateTimeStamp .
+
+:AgentSubPlan a owl:Class ;
+    rdfs:subClassOf plan:Plan .
+
+:JointPlan a owl:Class ;
+    rdfs:subClassOf plan:Plan .
+
+:ReplanningStrategy a owl:Class .
+
+:AgentPathSegment a owl:Class .
+
+:MultiAgentPlanner a owl:Class ;
+    rdfs:subClassOf plan:Planner .
+
+:PlannerProcedure a owl:Class .
+
+ma:Robot-2 a ma:Agent,
+        sosa:Platform ;
+    ma:hasGoalLocation [ a ma:GridLocation ;
+            ma:xCoordinate 4 ;
+            ma:yCoordinate 4 ] ;
+    ma:hasInitialLocation [ a ma:GridLocation ;
+            ma:xCoordinate 6 ;
+            ma:yCoordinate 4 ] .
+
+ma:time_instant_5 a time:Instant ;
+    time:inXSDDateTimeStamp "1970-01-01T00:00:05Z"^^xsd:dateTimeStamp .
+
+:CollisionEvent a owl:Class .
+
+:ConflictAlert a owl:Class .
+
+ma:time_instant_4 a time:Instant ;
+    time:inXSDDateTimeStamp "1970-01-01T00:00:04Z"^^xsd:dateTimeStamp .
+
+ma:time_instant_1 a time:Instant ;
+    time:inXSDDateTimeStamp "1970-01-01T00:00:01Z"^^xsd:dateTimeStamp .
+
+ma:time_instant_2 a time:Instant ;
+    time:inXSDDateTimeStamp "1970-01-01T00:00:02Z"^^xsd:dateTimeStamp .
+
+ma:time_instant_3 a time:Instant ;
+    time:inXSDDateTimeStamp "1970-01-01T00:00:03Z"^^xsd:dateTimeStamp .
+
+:Agent a owl:Class ;
+    rdfs:subClassOf plan:ProblemObject .
+
