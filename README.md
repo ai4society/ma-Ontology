@@ -6,6 +6,21 @@ Explainable MAPF Dashboard – [https://ai4society.github.io/ma-planning-ontolog
 
 ---
 
+## Requirements
+
+To run the integration script, you need:
+
+* **Python 3.8+**
+* **rdflib** library
+
+Install dependencies with:
+
+```bash
+pip install rdflib
+```
+
+---
+
 ## Running the Integration Script
 
 The script `integrate_mapf.py` converts MAPF JSON logs into RDF/TTL instances aligned with the MA-Ontology.
