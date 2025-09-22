@@ -108,6 +108,22 @@
         .prose td code {
             font-size: 0.9rem;
         }
+        
+        a.highlight-link {
+            color: var(--color-primary);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 2px solid var(--color-primary);
+            transition: color 0.3s, background-color 0.3s, border-color 0.3s;
+        }
+    
+        a.highlight-link:hover {
+            color: white;
+            background-color: var(--color-primary);
+            border-color: var(--color-primary-dark);
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+        }
 
     </style>
 </head>
@@ -171,7 +187,7 @@
                         <img src="ontology/maPO.png" alt="MA-Ontology Schema Diagram" class="mx-auto rounded-md">
                         <p class="text-sm text-gray-500 mt-2">The maPO schema, illustrating the classes and properties for modeling the MAPF planning and conflict-resolution workflow.</p>
                     </div>
-                    <p>The maPO extends the foundational concepts of the standard <a href="https://ai4society.github.io/planning-ontology/">Planning Ontology (PO)</a> to address the unique complexities of multi-agent scenarios. It creates a formal, queryable knowledge base that supports on-demand explainability. To ensure interoperability, maPO reuses concepts from established W3C and IEEE standards.</p>
+                    <p>The maPO extends the foundational concepts of the standard <a href="https://ai4society.github.io/planning-ontology/"  target="_blank" class="highlight-link">Planning Ontology (PO)</a> to address the unique complexities of multi-agent scenarios. It creates a formal, queryable knowledge base that supports on-demand explainability. To ensure interoperability, maPO reuses concepts from established W3C and IEEE standards.</p>
                     
                     <h3>Core Components</h3>
                     <ul>
